@@ -9,6 +9,7 @@ I strongly encourage you take a look on this tutorial, share it out. It is reall
 --------
 
 ## FastAPI related
+![image](https://user-images.githubusercontent.com/9277122/209690901-9aa1dc44-6925-4178-b506-e749e9986205.png)
 	1. Setup the virtual environment
 		a. python3 -m venv .env	Install the virtual environment
 		. .env/bin/activate	Activate the virtual environment
@@ -51,4 +52,4 @@ I strongly encourage you take a look on this tutorial, share it out. It is reall
 		Run	The parameter --reload will able to auto detect each change of the main route, and it will auto refresh the uvicorn instead of kill it and restart it every time. It is good for development environment.
 			
 		uvicorn main:app --reload --no-server-header	the
-![image](https://user-images.githubusercontent.com/9277122/209690901-9aa1dc44-6925-4178-b506-e749e9986205.png)
+
