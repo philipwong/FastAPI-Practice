@@ -1,5 +1,5 @@
 from enum import Enum
-from fastapi import FastAPI, Response, Query
+from fastapi import FastAPI, Response, Query, Path
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -114,8 +114,30 @@ async def read_items(q: str | None = Query(
         results.update({"q": q})
     return results
 
+## The following example show how to hidden the query in the API.
 @app.get("/items_hidden")
 async def hidden_query_route(hidden_query: str | None = Query(None, include_in_schema=False)):
     if hidden_query:
         return {"hidden_query": hidden_query}
     return {"hidden_query": "Not Found"}
+
+## The following example show how to validate the input information.
+@app.get("/items_validation/{item_id}")
+## Use "(...)" it can set no default but input is mandatory.
+# async def read_items_validation(
+#     item_id: int = Path(..., title= "The ID of items to get"), 
+#     q: str | None = Query(None, alias="item-query")
+#     ):
+
+## If put q:str after the item_id, Python will consider it is part of default value, so it makes "q: str" doesn't work.
+## However, if add "*," above the items ID, it will tell Python that after "*,", all other parameter consider as query. 
+async def read_items_validation(
+    *, 
+    item_id: int = Path(..., title= "The ID of items to get", gt=10, lt=100), 
+    q: str,
+    size: float = Query(..., gt=0, lt=7.75)
+    ):
+    results = {"item_id": item_id, "size": size}
+    if q:
+        results.update({"q": q})
+    return results
